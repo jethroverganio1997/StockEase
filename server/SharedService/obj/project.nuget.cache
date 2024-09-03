@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "+pa3SILxlkE=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\jethr\\Documents\\Personal-Project\\StockEase\\server\\SharedService\\SharedService.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jethr\\.nuget\\packages\\fluentvalidation\\11.5.1\\fluentvalidation.11.5.1.nupkg.sha512",
+    "C:\\Users\\jethr\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
+    "C:\\Users\\jethr\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.5.1\\fluentvalidation.dependencyinjectionextensions.11.5.1.nupkg.sha512",
+    "C:\\Users\\jethr\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\2.1.0\\microsoft.extensions.dependencyinjection.abstractions.2.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}
