@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using SharedService.Responses;
 
-namespace SearchService.IEndpoints;
+namespace SearchService.Endpoints;
 
 public class SearchProduct : IEndpoint
 {

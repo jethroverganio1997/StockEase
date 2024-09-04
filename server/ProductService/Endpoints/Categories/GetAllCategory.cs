@@ -12,20 +12,13 @@ public class GetAllCategory : IEndpoint
            .WithSummary("Get all categories");
     }
 
-    public record Response(
-        Guid Id,
-        string CategoryName,
-        string CategoryDesc
-    );
-
-
-    private async Task<Ok<SuccessResponse<List<Response>>>> Handler(ProductDbContext context, IMapper mapper, 
+    private async Task<Ok<SuccessResponse<List<CategoryDto>>>> Handler(ProductDbContext context, IMapper mapper, 
     CancellationToken cancellationToken)
     {
         var categories = await context.Categories
-            .ProjectTo<Response>(mapper.ConfigurationProvider)
+            .ProjectTo<CategoryDto>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-        return TypedResults.Ok(new SuccessResponse<List<Response>>(categories));
+        return TypedResults.Ok(new SuccessResponse<List<CategoryDto>>(categories));
     }
 }

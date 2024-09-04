@@ -36,9 +36,10 @@ public class UpdateProduct : IEndpoint
 
 
     private async Task<Results<Ok<SuccessResponse<string>>, NotFound<ErrorResponse>, UnprocessableEntity<ErrorResponse>>> Handler(Request request, 
-    ProductDbContext context, IMapper mapper, CancellationToken cancellationToken)
+    ProductDbContext context, IMapper mapper,IPublishEndpoint publishEndpoint, CancellationToken cancellationToken)
     {
         var product = await context.Products
+            .Include(x => x.Category)
             .FirstOrDefaultAsync(x => x.Id == request.id, cancellationToken);
 
 
@@ -61,6 +62,9 @@ public class UpdateProduct : IEndpoint
         product.ReorderLevel = request.ReorderLevel ?? product.ReorderLevel;
         product.Barcode = request.Barcode ?? product.Barcode;
         product.CategoryId = request.CategoryId ?? product.CategoryId;
+        product.UpdatedAt = DateTime.UtcNow;
+
+        await publishEndpoint.Publish(mapper.Map<ProductUpdated>(product), cancellationToken);
 
         var result = await context.SaveChangesAsync(cancellationToken);
 
@@ -73,7 +77,7 @@ public class UpdateProduct : IEndpoint
             ));
         }
 
-        return TypedResults.Ok(new SuccessResponse<string>($"Successfully updated product {product.ProductName}"));
+        return TypedResults.Ok(new SuccessResponse<string>("Product updated successfully"));
     }
  
 }

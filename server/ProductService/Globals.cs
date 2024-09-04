@@ -9,13 +9,16 @@ global using System.Diagnostics;
 global using Serilog;
 global using System.Globalization;
 global using AutoMapper.QueryableExtensions;
-global using Microsoft.AspNetCore.OpenApi;
+global using MassTransit;
+global using ProductService.Consumers;
+global using SwaggerThemes;
 global using SharedService.Endpoints;
 global using SharedService.Filters;
 global using SharedService.Extensions;
 global using SharedService.Responses;
 global using SharedService.Exceptions;
 global using SharedService.Validators;
-
+global using SharedService.Contracts.Products;
+global using ProductService.Dto;
 
 

@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Http.HttpResults;
+using ProductService.Dto;
 
 namespace ProductService.Endpoints.Products;
 
@@ -36,6 +37,7 @@ public class CreateProduct : IEndpoint
         [Required]
         public Guid CategoryId { get; init; }
     }
+    
 
     public class RequestValidator : AbstractValidator<Request>
     {
@@ -52,14 +54,32 @@ public class CreateProduct : IEndpoint
         }
     }
 
-    private async Task<Results<Ok<SuccessResponse<string>>, UnprocessableEntity<ErrorResponse>>> Handler(Request request, 
-    ProductDbContext context, IMapper mapper, CancellationToken cancellationToken)
+    private async Task<Results<Ok<SuccessResponse<ProductDto>>, UnprocessableEntity<ErrorResponse>>> Handler(Request request, 
+    ProductDbContext context, IMapper mapper,IPublishEndpoint publishEndpoint, CancellationToken cancellationToken)
     {
         var product = mapper.Map<Product>(request);
+
+        var exist = context.Products.Any(x => x.ProductName == product.ProductName);
+        if(exist)
+        {
+            return TypedResults.UnprocessableEntity(new ErrorResponse(
+                details: "Create product failed",
+                errors: "Product already exist",
+                traceId: Activity.Current?.Id ?? ""
+            ));
+        }
+
         context.Products.Add(product);
 
-        var result = await context.SaveChangesAsync(cancellationToken);
+        var category = await context.Categories.FirstOrDefaultAsync(c => c.Id == product.CategoryId, cancellationToken);
 
+        var newProduct = mapper.Map<ProductDto>(product);
+        newProduct.CategoryName = category.CategoryName;
+        newProduct.CategoryDesc = category.CategoryDesc;
+
+        await publishEndpoint.Publish(mapper.Map<ProductCreated>(newProduct), cancellationToken);
+
+        var result = await context.SaveChangesAsync(cancellationToken);
         if(result == 0)
         {
             return TypedResults.UnprocessableEntity(new ErrorResponse(
@@ -69,7 +89,7 @@ public class CreateProduct : IEndpoint
             ));
         }
 
-        return TypedResults.Ok(new SuccessResponse<string>($"Successfully created new product {product.ProductName}"));
+        return TypedResults.Ok(new SuccessResponse<ProductDto>(newProduct));
     }
  
 }

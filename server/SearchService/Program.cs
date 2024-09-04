@@ -1,12 +1,38 @@
 
+
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
 
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console(formatProvider: CultureInfo.CurrentCulture)
+    .CreateBootstrapLogger();
+
 try
 {
+    builder.Host.UseSerilog();
+    builder.Services.AddSerilog(); 
     builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
     builder.Services.AddEndpoints(assembly);
     builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddAutoMapper(assembly);
+    builder.Services.AddMassTransit(x =>
+    {
+        x.AddConsumersFromNamespaceContaining<ProductCreatedConsumer>();
+        x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("search", false));
+        x.UsingRabbitMq((context, cfg) =>
+        {
+            //TODO* handle error when search service database is down
+            // it will retry to send the message from rabbitmq to search service db
+            // for 5 times with 5 seconds interval before moving the message to the error queue
+            cfg.ReceiveEndpoint("search-product-created", e =>
+            {
+                e.UseMessageRetry(r => r.Interval(5, 5));
+                e.ConfigureConsumer<ProductCreatedConsumer>(context);
+            });
+
+            cfg.ConfigureEndpoints(context);
+        });
+    });
     builder.Services.AddSwaggerDocument(config =>
     {
         config.PostProcess = document =>
@@ -24,6 +50,7 @@ try
     await DbInitializer.InitDb(app);
 
     app.UseExceptionHandler(options => { });
+    app.UseSerilogRequestLogging();
     app.MapEndpoints();
 
     if (app.Environment.IsDevelopment())
@@ -40,6 +67,10 @@ try
 }
 catch (Exception ex)
 {
-    LoggerMessage.Define(LogLevel.Critical, new EventId(0), $"An error occurred while starting the application exception:{ex}");
+    Log.Fatal(ex, "Application terminated unexpectedly");
     throw;
+}
+finally
+{
+    Log.CloseAndFlush();
 }

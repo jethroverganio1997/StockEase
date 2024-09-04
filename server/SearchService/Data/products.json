@@ -120,7 +120,7 @@
     },
     {
         "id": "f1b3b3b4-1b3b-4b3b-8b3b-3b3b3b3b3b3b",
-        "productName": "Butter Shit",
+        "productName": "Butter Loaf",
         "productDesc": "Back soda",
         "imageLink": "http://example.com/image.jpggg",
         "unit": "Pieces",
@@ -136,20 +136,37 @@
         "categoryDesc": "Category 1 ProductDesc"
     },
     {
-        "id": "f1b3b3b4-1b3b-4b3b-8b3b-3b3b3b3b3b3b",
-        "productName": "Butter Loaf",
-        "productDesc": "Back soda",
-        "imageLink": "http://example.com/image.jpggg",
+        "id": "c8e1e7e7-9b7a-4e3e-8e9e-7e7e7e7e7e7e",
+        "productName": "Orange Juice",
+        "productDesc": "Freshly squeezed orange juice",
+        "imageLink": "https://via.placeholder.com/150",
+        "unit": "Liters",
+        "status": "Available",
+        "costPrice": 150,
+        "sellingPrice": 200,
+        "stockLevel": 50,
+        "reorderLevel": 10,
+        "barcode": "9876543210",
+        "createdAt": "2024-09-02T12:00:00.000000Z",
+        "updatedAt": "2024-09-02T12:00:00.000000Z",
+        "categoryName": "Category 2",
+        "categoryDesc": "Category 2 ProductDesc"
+    },
+    {
+        "id": "d9d8d7d6-d5d4-d3d2-d1d0-d9d8d7d6d5d4",
+        "productName": "Chocolate Bar",
+        "productDesc": "Delicious chocolate bar",
+        "imageLink": "https://via.placeholder.com/150",
         "unit": "Pieces",
-        "status": "Active",
-        "costPrice": 10.99,
-        "sellingPrice": 15.99,
+        "status": "Available",
+        "costPrice": 50,
+        "sellingPrice": 75,
         "stockLevel": 100,
         "reorderLevel": 20,
-        "barcode": "1234567890123",
-        "createdAt": "2024-09-02T03:08:01.721371Z",
-        "updatedAt": "2024-09-02T03:08:01.721371Z",
-        "categoryName": "Category 1",
-        "categoryDesc": "Category 1 ProductDesc"
+        "barcode": "0123456789",
+        "createdAt": "2024-09-02T12:00:00.000000Z",
+        "updatedAt": "2024-09-02T12:00:00.000000Z",
+        "categoryName": "Category 2",
+        "categoryDesc": "Category 2 ProductDesc"
     }
 ]

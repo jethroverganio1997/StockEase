@@ -23,11 +23,12 @@ public class DeleteProduct : IEndpoint
         }
     }
 
-    private async Task<Results<Ok<SuccessResponse<string>>, NotFound<ErrorResponse>>> Handler([AsParameters]Request request, ProductDbContext context, CancellationToken cancellationToken)
+    private async Task<Results<Ok<SuccessResponse<string>>, NotFound<ErrorResponse>>> Handler([AsParameters]Request request, 
+    IMapper mapper,IPublishEndpoint publishEndpoint, ProductDbContext context, CancellationToken cancellationToken)
     {
 
         var product = await context.Products
-            .FirstOrDefaultAsync(x => x.Id == Guid.Parse(request.Id), cancellationToken);
+            .FirstOrDefaultAsync(x => x.Id == Guid.Parse(request.Id) && x.DeletedAt == null, cancellationToken);
 
         if (product is null)
         {
@@ -39,6 +40,8 @@ public class DeleteProduct : IEndpoint
         }
 
         product.DeletedAt = DateTime.UtcNow;
+
+        await publishEndpoint.Publish<ProductDeleted>(new { Id = product.Id }, cancellationToken);
 
         await context.SaveChangesAsync(cancellationToken);
 

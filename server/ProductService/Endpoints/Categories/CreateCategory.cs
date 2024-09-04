@@ -33,7 +33,7 @@ public class CreateCategory : IEndpoint
         }
     }
 
-    private async Task<Results<Ok<SuccessResponse<string>>,BadRequest<ErrorResponse>, UnprocessableEntity<ErrorResponse>>> Handler(
+    private async Task<Results<Ok<SuccessResponse<CategoryDto>>,BadRequest<ErrorResponse>, UnprocessableEntity<ErrorResponse>>> Handler(
     [FromBody]Request request, ProductDbContext context, IMapper mapper, CancellationToken cancellationToken)
     {
 
@@ -51,6 +51,8 @@ public class CreateCategory : IEndpoint
             ));
         }
 
-        return TypedResults.Ok(new SuccessResponse<string>("Category created successfully"));
+        var newCategory = mapper.Map<CategoryDto>(category);
+
+        return TypedResults.Ok(new SuccessResponse<CategoryDto>(newCategory));
     }
 }

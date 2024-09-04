@@ -7,7 +7,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - /var/lib/postgresql/data
   mongodb:
     image: mongo
     environment:
@@ -16,7 +16,10 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - mongodb-data:/data/db
-volumes:
-  postgres-data:
-  mongodb-data:
+      - /data/db
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    # pass and username: guest

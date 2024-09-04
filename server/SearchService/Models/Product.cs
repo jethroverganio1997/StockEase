@@ -15,7 +15,6 @@ public class Product : Entity
     public string Barcode { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-    public DateTime? DeletedAt { get; set; }
     public required string CategoryName { get; set; }    
     public required string CategoryDesc { get; set; } 
 }

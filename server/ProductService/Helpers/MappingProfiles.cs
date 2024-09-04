@@ -9,15 +9,20 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
 
+        CreateMap<Product, ProductDto>().IncludeMembers(x => x.Category);
+        CreateMap<Category, ProductDto>();
+        
         CreateMap<CreateProduct.Request, Product>();
-
-        CreateMap<Product, GetProductById.Response>().IncludeMembers(x => x.Category);
-        CreateMap<Category, GetProductById.Response>();
 
         CreateMap<UpdateProduct.Request, Product>();
 
         CreateMap<CreateCategory.Request, Category>();
+        CreateMap<Category, CategoryDto>();
 
-        CreateMap<Category, GetAllCategory.Response>();
+        //use by rabbitmq consumer
+        CreateMap<ProductDto, ProductCreated>();
+
+        CreateMap<Product, ProductUpdated>().IncludeMembers(x => x.Category);
+        CreateMap<Category, ProductUpdated>();
     }
 }
