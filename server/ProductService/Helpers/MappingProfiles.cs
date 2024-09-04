@@ -12,11 +12,11 @@ public class MappingProfiles : Profile
         CreateMap<Product, ProductDto>().IncludeMembers(x => x.Category);
         CreateMap<Category, ProductDto>();
         
-        CreateMap<CreateProduct.Request, Product>();
+        CreateMap<CreateProductEndpoint.Request, Product>();
 
-        CreateMap<UpdateProduct.Request, Product>();
+        CreateMap<CreateProductEndpoint.Request, Product>();
 
-        CreateMap<CreateCategory.Request, Category>();
+        CreateMap<CreateCategoryEndpoint.Request, Category>();
         CreateMap<Category, CategoryDto>();
 
         //use by rabbitmq consumer

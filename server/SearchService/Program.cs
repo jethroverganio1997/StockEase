@@ -4,13 +4,16 @@ var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
 
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console(formatProvider: CultureInfo.CurrentCulture)
+    .WriteTo.Console()
     .CreateBootstrapLogger();
 
 try
 {
-    builder.Host.UseSerilog();
-    builder.Services.AddSerilog(); 
+    builder.Host.UseSerilog((ctx, lc) => lc
+        .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+        .Enrich.FromLogContext()
+        .ReadFrom.Configuration(ctx.Configuration));
+
     builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
     builder.Services.AddEndpoints(assembly);
     builder.Services.AddEndpointsApiExplorer();

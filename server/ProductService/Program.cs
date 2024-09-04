@@ -1,19 +1,33 @@
 
 
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 var builder = WebApplication.CreateBuilder(args);
 
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console(formatProvider: CultureInfo.CurrentCulture)
+    .WriteTo.Console()
     .CreateBootstrapLogger();
 
 try
 {
     var assembly = typeof(Program).Assembly;
     
-    builder.Host.UseSerilog();
-    builder.Services.AddSerilog(); 
+    builder.Host.UseSerilog((ctx, lc) => lc
+        .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
+        .Enrich.FromLogContext()
+        .ReadFrom.Configuration(ctx.Configuration));
+
     builder.Services.AddSingleton(Log.Logger);
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            options.Authority = builder.Configuration["IdentityServiceUrl"];
+            options.RequireHttpsMetadata = false;
+            options.TokenValidationParameters.ValidateAudience = false;
+            options.TokenValidationParameters.NameClaimType = "username";
+        });
+    builder.Services.AddAuthorization();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerDocument(config =>
     {
@@ -69,6 +83,8 @@ try
             options.Path = "/redoc";
         });
     }
+    app.UseAuthentication();
+    app.UseAuthorization();
     app.UseExceptionHandler(options => { });
     app.UseSerilogRequestLogging();
     app.MapEndpoints();
