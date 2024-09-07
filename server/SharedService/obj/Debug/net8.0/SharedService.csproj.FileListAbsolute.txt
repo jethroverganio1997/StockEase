@@ -19,3 +19,5 @@ C:\Users\jethr\Documents\Personal-Project\StockEase\server\SharedService\obj\Deb
 C:\Users\jethr\Documents\Personal-Project\StockEase\server\SharedService\obj\Debug\net8.0\refint\SharedService.dll
 C:\Users\jethr\Documents\Personal-Project\StockEase\server\SharedService\obj\Debug\net8.0\SharedService.pdb
 C:\Users\jethr\Documents\Personal-Project\StockEase\server\SharedService\obj\Debug\net8.0\ref\SharedService.dll
+C:\Users\jethr\Documents\Personal-Project\StockEase\server\SharedService\bin\Debug\net8.0\SharedService.xml
+C:\Users\jethr\Documents\Personal-Project\StockEase\server\SharedService\obj\Debug\net8.0\SharedService.xml

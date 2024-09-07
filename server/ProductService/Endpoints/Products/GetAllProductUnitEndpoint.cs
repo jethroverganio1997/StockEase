@@ -7,9 +7,10 @@ public class GetAllProductUnitEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("/v1/api/product-unit", Handler)
+        app.MapGet("/v1/api/products/unit", Handler)
            .WithTags("Products")
-           .WithSummary("Get all product units");
+           .WithSummary("Get all product units")
+           .RequireAuthorization();
     }
 
     public record Response(

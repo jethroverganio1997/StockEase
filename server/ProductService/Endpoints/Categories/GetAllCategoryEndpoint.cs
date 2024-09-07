@@ -7,7 +7,7 @@ public class GetAllCategoryEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("/v1/api/category", Handler)
+        app.MapGet("/v1/api/products/category", Handler)
            .WithTags("Category")
            .WithSummary("Get all categories");
     }

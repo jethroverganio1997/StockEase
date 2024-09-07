@@ -10,7 +10,8 @@ public class GetProductByIdEndpoint : IEndpoint
         app.MapGet("v1/api/products/{Id}", Handler)
             .WithTags("Products")
             .WithSummary("Get a product by ID")
-            .WithRequestValidation<Request>();
+            .WithRequestValidation<Request>()
+            .RequireAuthorization();
     }
 
     public record Request(string Id);

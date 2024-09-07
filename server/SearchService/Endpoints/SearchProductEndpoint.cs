@@ -24,6 +24,7 @@ public class SearchProductEndpoint : IEndpoint
 
     public record Response(
         List<Product> Results, 
+        int PageIndex,
         int PageSize, 
         int PageCount, 
         long TotalCount
@@ -60,6 +61,7 @@ public class SearchProductEndpoint : IEndpoint
 
         var response = new Response(
             result.Results.ToList(),
+            request.Page,
             request.PageSize,
             result.PageCount,
             result.TotalCount

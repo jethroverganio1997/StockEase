@@ -7,9 +7,10 @@ public class GetAllProductStatusEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("/v1/api/product-status", Handler)
+        app.MapGet("/v1/api/products/status", Handler)
            .WithTags("Products")
-           .WithSummary("Get all product status");
+           .WithSummary("Get all product status")
+           .RequireAuthorization();
     }
 
     public record Response(

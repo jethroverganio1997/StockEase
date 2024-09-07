@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using ProductService.Dto;
 
 namespace ProductService.Endpoints.Products;
@@ -56,7 +57,7 @@ public class CreateProductEndpoint : IEndpoint
     }
 
     private async Task<Results<Ok<SuccessResponse<ProductDto>>, UnprocessableEntity<ErrorResponse>>> Handler(
-        Request request, 
+        [FromBody]Request request, 
         ProductDbContext context, 
         IMapper mapper,
         IPublishEndpoint publishEndpoint, 

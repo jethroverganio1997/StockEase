@@ -8,7 +8,7 @@ public class DeleteCategoryEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/v1/api/category/{Id}", Handler)
+        app.MapDelete("/v1/api/products/category/{Id}", Handler)
             .WithTags("Category")
             .WithSummary("Delete a category by Guid ID")
             .WithRequestValidation<Request>()

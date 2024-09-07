@@ -8,7 +8,7 @@ public class CreateCategoryEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {   
-        app.MapPost("/v1/api/category", Handler)
+        app.MapPost("/v1/api/products/category", Handler)
             .WithTags("Category")
             .WithSummary("Create a new category")
             .AddEndpointFilter<EnsureBodyDataExistsFilter<Request>>()
