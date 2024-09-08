@@ -15,7 +15,7 @@ public class SearchProductEndpoint : IEndpoint
 
     public record Request(
         [FromQuery]string SearchItem, 
-        [FromQuery]int Page = 1, 
+        [FromQuery]int PageIndex = 1, 
         [FromQuery]int PageSize = 5,
         [FromQuery]string OrderBy = "",
         [FromQuery]string FilterBy = "",
@@ -54,14 +54,14 @@ public class SearchProductEndpoint : IEndpoint
             _ => query
         };
 
-        query.PageNumber(request.Page);
+        query.PageNumber(request.PageIndex);
         query.PageSize(request.PageSize);
 
         var result = await query.ExecuteAsync();
 
         var response = new Response(
             result.Results.ToList(),
-            request.Page,
+            request.PageIndex,
             request.PageSize,
             result.PageCount,
             result.TotalCount

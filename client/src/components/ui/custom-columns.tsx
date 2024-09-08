@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ColumnsData } from "../../app/inventory/types";
+import { ColumnsData } from "@/types";
 
 export default function createColumnData<T>(
   columnsData: ColumnsData[]

@@ -3,10 +3,11 @@
 import { Bell, Menu, Moon, Search, Settings, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { Button } from "../../components/ui/button";
-import { Avatar, AvatarFallback } from "../../components/ui/avatar";
-import { useAppDispatch, useAppSelector } from "../redux";
+import { Button } from "../ui/button";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { useAppDispatch, useAppSelector } from "../../state/redux";
 import { setIsSidebarCollapsed } from "../../state";
+import { SheetMenu } from "./sheet-menu";
 
 // Define the types for the props
 interface IconButtonProps {
@@ -18,7 +19,7 @@ const NavBar = () => {
   const { theme, setTheme } = useTheme();
   const dispatch = useAppDispatch();
   const isSidebarCollapsed = useAppSelector(
-    (state) => state.global.isSidebarCollapsed
+    (state) => state.global.isSidebarCollapsed,
   );
   const toggleSidebar = () => {
     dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
@@ -29,17 +30,15 @@ const NavBar = () => {
   };
 
   return (
-    <div className="flex justify-between items-center w-full mb-7">
+    <div className="mb-6 flex w-full items-center justify-between">
       {/* LEFT SIDE */}
-      <div className="flex justify-between items-center gap-5">
-        <Button variant="outline" size="icon" onClick={toggleSidebar}>
-          <Menu className="h-4 w-4" />
-        </Button>
+      <div className="flex items-center justify-between gap-5">
+        <SheetMenu />
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="flex justify-between items-center gap-5">
-        <div className="hidden md:flex justify-between items-center gap-5">
+      <div className="flex items-center justify-between gap-5">
+        <div className="hidden items-center justify-between gap-5 md:flex">
           <div>
             <Button variant="outline" size="icon" onClick={toggleDarkMode}>
               <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -51,7 +50,7 @@ const NavBar = () => {
             <Button variant="outline" size="icon" onClick={() => {}}>
               <Bell className="h-4 w-4" />
             </Button>
-            <span className="absolute -top-2 -right-2 inline-flex items-center justify-center px-[0.4rem] py-1 text-xs font-semibold leading-none text-red-100 bg-red-400 rounded-full">
+            <span className="absolute -right-2 -top-2 inline-flex items-center justify-center rounded-full bg-red-400 px-[0.4rem] py-1 text-xs font-semibold leading-none text-red-100">
               2
             </span>
           </div>

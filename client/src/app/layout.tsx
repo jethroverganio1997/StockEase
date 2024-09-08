@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import DashboardWrapper from "./components/dashboard-layout";
+
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import DashboardPanelLayout from "../components/dashboard-panel/dashboard-panel-layout";
+import StoreProvider from "../state/redux";
+import DashboardWrapper from "./wrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning >
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"

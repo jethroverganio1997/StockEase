@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { ColumnsData, PagedResult, Product } from "./types";
-import createColumnsData from "../../components/ui/custom-columns";
-import { DataTable } from "../../components/ui/custom-data-table";
-import { Input } from "../../components/ui/input";
-import { Button } from "../../components/ui/button";
-import { MoreHorizontal } from "lucide-react";
-// import { DataTablePagination } from "../../components/ui/data-table-pagination";
-
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import React, { useState } from "react";
+import { PagedResult } from "@/types";
+import createColumnsData from "@/components/ui/custom-columns";
+import { DataTable } from "@/components/ui/custom-data-table";
+import { Button } from "@/components/ui/button";
+import TablePagination from "../../components/ui/table-pagination";
+import TableRowSize from "../../components/ui/table-row-size";
+import TableColumnsVisible from "../../components/ui/table-columns-visible";
+import { useAppDispatch } from "../../state/redux";
+import { setSearchParams } from "./(state)/search-slice";
+import SearchInput from "../../components/ui/search-input";
+import { Product } from "./(types)/product";
+import InventoryColumns from "./(types)/inventory-columns";
 import {
   ColumnFiltersState,
   getCoreRowModel,
@@ -23,106 +21,14 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import TablePagination from "./table-pagination";
-import TableRowSize from "./table-row-size";
-import TableColumnsVisible from "./table-columns-visible";
-import { useAppDispatch, useAppSelector } from "../redux";
-import qs from "query-string";
-import { setSearchParams } from "./search-slice";
-import { getData } from "./actions";
-import { setProducts } from "./inventory-slice";
+import AddProductDialog from "./add-product-dialog";
 
-const columnsDef: ColumnsData[] = [
-  {
-    id: "select",
-    headerName: "Select",
-    headerType: "Checkbox",
-    CellType: "Selectable",
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    id: "productName",
-    headerName: "Name",
-    headerType: "Sort",
-    CellType: "Text",
-    enableSorting: true,
-    enableHiding: true,
-  },
-  {
-    id: "productDesc",
-    headerName: "Description",
-    headerType: "Sort",
-    CellType: "Text",
-    enableSorting: true,
-    enableHiding: true,
-  },
-  {
-    id: "stockLevel",
-    headerName: "Stocks",
-    headerType: "Sort",
-    CellType: "Text",
-    enableSorting: true,
-    enableHiding: true,
-  },
-  {
-    id: "costPrice",
-    headerName: "Cost Price",
-    headerType: "Sort",
-    CellType: "Price",
-    enableSorting: true,
-    enableHiding: true,
-  },
-  {
-    id: "sellingPrice",
-    headerName: "Selling Price",
-    headerType: "Sort",
-    CellType: "Price",
-    enableSorting: true,
-    enableHiding: true,
-  },
-  {
-    id: "unit",
-    headerName: "Unit",
-    headerType: "Sort",
-    CellType: "Text",
-    enableSorting: true,
-    enableHiding: true,
-  },
-  {
-    id: "categoryName",
-    headerName: "Category",
-    headerType: "Sort",
-    CellType: "Text",
-    enableSorting: true,
-    enableHiding: true,
-  },
-  {
-    id: "status",
-    headerName: "Status",
-    headerType: "Sort",
-    CellType: "Text",
-    enableSorting: true,
-    enableHiding: true,
-  },
-  {
-    id: "actions",
-    headerName: "Actions",
-    headerType: "Text",
-    CellType: "Action",
-    enableSorting: false,
-    enableHiding: false,
-  },
-];
-
-type InventoryTableProps = {
+interface InventoryTableProps {
   products: PagedResult<Product[]>;
-};
+}
 
 export default function InventoryTable({ products }: InventoryTableProps) {
-  // const fetcher = (url: string) => getData().then((res) => res.data);
-  // const { data, error, isLoading } = useSWR('/api/user/123', fetcher);
-  const columns = createColumnsData<Product>(columnsDef);
+  const columns = createColumnsData<Product>(InventoryColumns);
   const dispatch = useAppDispatch();
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -149,23 +55,25 @@ export default function InventoryTable({ products }: InventoryTableProps) {
     },
   });
 
-  const handlePageChange = (pageIndex: number) => {
-    console.log("pageIndex", pageIndex);
-    dispatch(setSearchParams({ pageIndex: pageIndex, pageSize: 5, searchItem: "", orderBy: "ProductName", filterBy: "", filterName: "" }));
-  };
+  function handlePageChange(pageIndex: number) {
+    dispatch(setSearchParams({ pageIndex: pageIndex }));
+  }
+
+  function handlePageRowChange(pageSize: number) {
+    dispatch(setSearchParams({ pageSize: pageSize }));
+  }
+
+  function onSearch(value: string) {
+    dispatch(setSearchParams({ searchItem: value }));
+  }
 
   return (
     <div>
       {/* Table Header */}
       <div className="flex items-center gap-4">
-        <Input
-          placeholder="Filter product..."
-          value={""}
-          onChange={(event) => {}}
-          className="max-w-sm"
-        />
+        <SearchInput onSearch={onSearch} />
         <TableColumnsVisible table={table} />
-        <Button>Add Product</Button>
+        <AddProductDialog />
       </div>
 
       {/* Table */}
@@ -178,7 +86,10 @@ export default function InventoryTable({ products }: InventoryTableProps) {
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
         <div className="flex flex-wrap sm:flex-nowrap justify-center items-center space-x-6 lg:space-x-8">
-          <TableRowSize pageSize={products.pageSize} />
+          <TableRowSize
+            pageSize={products.pageSize}
+            handlePageRowChange={handlePageRowChange}
+          />
           <TablePagination
             pageIndex={products.pageIndex}
             pageCount={products.pageCount}

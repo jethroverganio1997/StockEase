@@ -6,7 +6,7 @@ import {
   useSelector,
   Provider,
 } from "react-redux";
-import globalReducer from "../state";
+import globalReducer from ".";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 import {
@@ -21,8 +21,8 @@ import {
 } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import inventorySlice from "./inventory/inventory-slice";
-import searchSlice from "./inventory/search-slice";
+import inventorySlice from "../app/inventory/(state)/inventory-slice";
+import searchSlice from "../app/inventory/(state)/search-slice";
 
 /* REDUX PERSISTENCE */
 const createNoopStorage = () => {
@@ -57,8 +57,8 @@ const rootReducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 /* REDUX STORE */
-export const makeStore = () => {
-  return configureStore({
+export const makeStore = () =>
+  configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
@@ -67,7 +67,6 @@ export const makeStore = () => {
         },
       }),
   });
-};
 
 /* REDUX TYPES */
 export type AppStore = ReturnType<typeof makeStore>;
@@ -87,10 +86,11 @@ export default function StoreProvider({
     storeRef.current = makeStore();
     setupListeners(storeRef.current.dispatch);
   }
+
   const persistor = persistStore(storeRef.current);
 
   return (
-    <Provider store={storeRef.current}>
+    <Provider store={storeRef.current} stabilityCheck="never">
       <PersistGate loading={null} persistor={persistor}>
         {children}
       </PersistGate>
