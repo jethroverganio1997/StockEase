@@ -17,17 +17,7 @@ import {
 
 export default function TableSkeleton() {
   return (
-    <div className="w-full">
-      <CardHeader className="space-y-4">
-        <div className="flex items-center justify-between gap-4">
-          <Skeleton className="h-8 w-full max-w-sm " />
-          <div className="flex space-x-2">
-            <Skeleton className="h-8 w-[100px]" />
-            <Skeleton className="h-8 w-[100px]" />
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
+    <div className="w-full py-6">
         <Table>
           <TableHeader>
             <TableRow>
@@ -82,18 +72,6 @@ export default function TableSkeleton() {
             ))}
           </TableBody>
         </Table>
-      </CardContent>
-      <CardFooter className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <Skeleton className="h-8 w-[100px]" />
-          <Skeleton className="h-8 w-[70px]" />
-        </div>
-        <div className="flex items-center space-x-2">
-          <Skeleton className="h-8 w-[100px]" />
-          <Skeleton className="h-8 w-[80px]" />
-          <Skeleton className="h-8 w-[80px]" />
-        </div>
-      </CardFooter>
     </div>
   );
 }

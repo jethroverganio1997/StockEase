@@ -1,10 +1,7 @@
 "use client";
 import * as React from "react";
 
-import {
-  ColumnDef,
-  flexRender,
-} from "@tanstack/react-table";
+import { ColumnDef, flexRender } from "@tanstack/react-table";
 import {
   Table,
   TableBody,
@@ -17,16 +14,15 @@ import {
 type Props<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   table: import("@tanstack/table-core").Table<TData>;
-}
+};
 
 export function DataTable<TData, TValue>({
   columns,
   table,
 }: Props<TData, TValue>) {
-
   return (
     <div className="w-full">
-      <div className="rounded-md border my-4">
+      <div className="my-4 rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -38,7 +34,7 @@ export function DataTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -57,7 +53,7 @@ export function DataTable<TData, TValue>({
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}

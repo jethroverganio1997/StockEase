@@ -21,7 +21,6 @@ import {
 } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import inventorySlice from "../app/inventory/(state)/inventory-slice";
 import searchSlice from "../app/inventory/(state)/search-slice";
 
 /* REDUX PERSISTENCE */
@@ -47,11 +46,10 @@ const storage =
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["global", "inventory", "search"],
+  whitelist: ["global", "search"],
 };
 const rootReducer = combineReducers({
   global: globalReducer,
-  inventory: inventorySlice,
   search: searchSlice,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,83 +1,45 @@
-import React, { useState } from "react";
+import React from "react";
 import { PagedResult } from "@/types";
 import createColumnsData from "@/components/ui/custom-columns";
 import { DataTable } from "@/components/ui/custom-data-table";
-import { Button } from "@/components/ui/button";
 import TablePagination from "../../components/ui/table-pagination";
 import TableRowSize from "../../components/ui/table-row-size";
-import TableColumnsVisible from "../../components/ui/table-columns-visible";
-import { useAppDispatch } from "../../state/redux";
-import { setSearchParams } from "./(state)/search-slice";
-import SearchInput from "../../components/ui/search-input";
 import { Product } from "./(types)/product";
 import InventoryColumns from "./(types)/inventory-columns";
-import {
-  ColumnFiltersState,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  SortingState,
-  useReactTable,
-  VisibilityState,
-} from "@tanstack/react-table";
-import AddProductDialog from "./add-product-dialog";
+import { usePagination } from "./(hooks)/usePagination";
+import { useTableState } from "./(hooks)/useTableState";
+import TableSkeleton from "../../components/ui/table-skeleton";
 
 interface InventoryTableProps {
   products: PagedResult<Product[]>;
+  loading: boolean;
+  error: Error | null;
 }
 
-export default function InventoryTable({ products }: InventoryTableProps) {
+export default function InventoryTable({
+  products,
+  loading,
+  error,
+}: InventoryTableProps) {
   const columns = createColumnsData<Product>(InventoryColumns);
-  const dispatch = useAppDispatch();
 
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
+  const { handlePageChange, handlePageRowChange } = usePagination();
 
-  const table = useReactTable({
+  const { table } = useTableState<Product>({
     data: products.results,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
   });
-
-  function handlePageChange(pageIndex: number) {
-    dispatch(setSearchParams({ pageIndex: pageIndex }));
-  }
-
-  function handlePageRowChange(pageSize: number) {
-    dispatch(setSearchParams({ pageSize: pageSize }));
-  }
-
-  function onSearch(value: string) {
-    dispatch(setSearchParams({ searchItem: value }));
-  }
 
   return (
     <div>
-      {/* Table Header */}
-      <div className="flex items-center gap-4">
-        <SearchInput onSearch={onSearch} />
-        <TableColumnsVisible table={table} />
-        <AddProductDialog />
-      </div>
-
       {/* Table */}
-      <DataTable table={table} columns={columns} />
+      {loading ? (
+        <TableSkeleton />
+      ) : error ? (
+        <div>Error: {error.message}</div>
+      ) : (
+        <DataTable table={table} columns={columns} />
+      )}
 
       {/* Table Footer */}
       <div className="flex items-center justify-between px-2">
@@ -85,7 +47,7 @@ export default function InventoryTable({ products }: InventoryTableProps) {
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
-        <div className="flex flex-wrap sm:flex-nowrap justify-center items-center space-x-6 lg:space-x-8">
+        <div className="flex flex-wrap items-center justify-center space-x-6 sm:flex-nowrap lg:space-x-8">
           <TableRowSize
             pageSize={products.pageSize}
             handlePageRowChange={handlePageRowChange}

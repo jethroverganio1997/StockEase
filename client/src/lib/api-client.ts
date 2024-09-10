@@ -50,7 +50,7 @@ async function getHeaders() {
 async function handleResponse(response: Response) {
     const text = await response.text();
     // const data = text && JSON.parse(text);
-    console.log("response", JSON.parse(text));
+    // console.log("response", JSON.parse(text));
     let data;
     try {
         data = JSON.parse(text);
