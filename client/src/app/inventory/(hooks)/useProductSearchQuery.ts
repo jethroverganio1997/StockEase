@@ -10,7 +10,7 @@ export const useProductSearchQuery = (url: string) => {
     totalCount: 1,
   };
 
-  const { data, error, isFetching } = useQuery({
+  const { data, error, isLoading } = useQuery({
     initialData: initialData,
     queryKey: ["inventory", url],
     queryFn: async () => {
@@ -19,5 +19,5 @@ export const useProductSearchQuery = (url: string) => {
     },
   });
 
-  return { data, error, isFetching };
+  return { data, error, isLoading };
 };

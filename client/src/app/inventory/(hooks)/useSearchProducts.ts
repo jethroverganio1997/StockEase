@@ -9,16 +9,17 @@ export const useSearchProducts = () => {
     pageIndex: state.search.pageIndex,
     pageSize: state.search.pageSize,
     orderBy: state.search.orderBy,
-    filterBy: state.search.filterBy,
-    filterName: state.search.filterName,
+    priceFilter: state.search.priceFilter,
+    stocksFilter: state.search.stocksFilter,
+    categoryFilter: state.search.categoryFilter,
   }));
 
   const dispatch = useAppDispatch();
 
   const url = qs.stringifyUrl({ url: "", query: searchParams });
 
-  const onSearch = (value: string) => {
-    dispatch(setSearchParams({ searchItem: value }));
+  const onSearch = (params: any) => {
+    dispatch(setSearchParams(params));
   };
 
   return {

@@ -2,11 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface SearchState {
   searchItem: string;
+  categoryFilter: string; // Food, Bread
+  orderBy: string; // ProductName, StockLevel
+  priceFilter: string; // "0-100"
+  stocksFilter: string; // "0-100"
   pageIndex: number;
   pageSize: number;
-  orderBy: string; // ProductName, StockLevel
-  filterBy: string; // Status, Category
-  filterName: string; // Active, Inactive etc.. or CategoryName
 }
 
 const initialState: SearchState = {
@@ -14,8 +15,9 @@ const initialState: SearchState = {
   pageIndex: 1,
   pageSize: 5,
   orderBy: "ProductName",
-  filterBy: "",
-  filterName: "",
+  categoryFilter: "",
+  priceFilter: "",
+  stocksFilter: "",
 };
 
 const searchSlice = createSlice({

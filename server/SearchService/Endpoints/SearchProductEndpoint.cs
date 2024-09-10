@@ -15,11 +15,12 @@ public class SearchProductEndpoint : IEndpoint
 
     public record Request(
         [FromQuery]string SearchItem, 
+        [FromQuery]string CategoryFilter,
+        [FromQuery]string OrderBy,
+        [FromQuery]string PriceFilter,
+        [FromQuery]string StocksFilter,
         [FromQuery]int PageIndex = 1, 
-        [FromQuery]int PageSize = 5,
-        [FromQuery]string OrderBy = "",
-        [FromQuery]string FilterBy = "",
-        [FromQuery]string FilterName = ""
+        [FromQuery]int PageSize = 5
     );
 
     public record Response(
@@ -40,6 +41,44 @@ public class SearchProductEndpoint : IEndpoint
             query.Match(Search.Full,request.SearchItem).SortByTextScore();
         }
 
+        if (!string.IsNullOrEmpty(request.CategoryFilter))
+        {
+            query.Match(x => x.CategoryName == request.CategoryFilter);
+        }
+
+        
+        if (!string.IsNullOrEmpty(request.PriceFilter))
+        {
+            var parts = request.PriceFilter.Split('-');
+            var min = decimal.Parse(parts[0]);
+            var max = decimal.Parse(parts[1]);
+
+            if (max > 0)
+            {
+                query.Match(x => x.SellingPrice >= min && x.SellingPrice <= max);
+            }
+            else
+            {
+                query.Match(x => x.SellingPrice >= min);
+            }
+        }
+
+        if (!string.IsNullOrEmpty(request.StocksFilter))
+        {
+            var parts = request.StocksFilter.Split('-');
+            var min = int.Parse(parts[0]);
+            var max = int.Parse(parts[1]);
+
+            if (max > 0)
+            {
+                query.Match(x => x.StockLevel >= min && x.StockLevel <= max);
+            }
+            else
+            {
+                query.Match(x => x.StockLevel >= min);
+            }
+        }
+
         query = request.OrderBy switch
         {
             "ProductName" => query.Sort(x => x.Ascending(a => a.ProductName)),
@@ -47,12 +86,6 @@ public class SearchProductEndpoint : IEndpoint
             _ => query.Sort(x => x.Descending(a => a.CreatedAt))
         };
 
-        query = request.FilterBy switch
-        {
-            "Status" => query.Match(a => a.Status == request.FilterName),
-            "Category" => query.Match(x => x.CategoryName == request.FilterName),
-            _ => query
-        };
 
         query.PageNumber(request.PageIndex);
         query.PageSize(request.PageSize);
