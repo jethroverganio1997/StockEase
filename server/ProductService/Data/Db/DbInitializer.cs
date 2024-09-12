@@ -5,7 +5,7 @@ namespace ProductService.Data.Db;
 
 public static class DbInitializer
 {
-    public static void InitDb(WebApplication app)
+    public static void InitializeDb(this WebApplication app)
     {
         using var scope = app?.Services.CreateScope();
 

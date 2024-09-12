@@ -13,4 +13,5 @@ global using AutoMapper;
 global using SearchService.Consumers;
 global using Serilog;
 global using System.Globalization;
+global using SearchService;
 

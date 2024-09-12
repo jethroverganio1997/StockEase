@@ -77,9 +77,9 @@ import {
             ]
           },
           {
-            href: "/categories",
-            label: "Categories",
-            active: pathname.includes("/categories"),
+            href: "/session",
+            label: "Session",
+            active: pathname.includes("/session"),
             icon: Bookmark,
             submenus: []
           },

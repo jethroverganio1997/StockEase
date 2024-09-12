@@ -1,5 +1,11 @@
+'use client'
+
 import React from "react";
 
 export default function Dashboard() {
-  return <div>Test</div>;
+  return (
+    <div>
+      Dashbord
+    </div>
+  );
 }

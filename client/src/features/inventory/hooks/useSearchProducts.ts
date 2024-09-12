@@ -1,4 +1,4 @@
-import { setSearchParams } from "../(state)/search-slice";
+import { setSearchParams } from "../stores/search-slice";
 import { useAppDispatch, useAppSelector } from "@/state/redux";
 
 import qs from "query-string";

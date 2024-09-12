@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --background: #ffffff;
+    --foreground: #1e1e1e;
 
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
@@ -13,8 +13,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
+    --primary: #0d0d0d;
+    --primary-foreground: #fafafa;
 
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
@@ -33,6 +33,56 @@
     --ring: 240 10% 3.9%;
 
     --radius: 0.5rem;
+
+    /* --primary: #142700;
+    --surfaceTint: #4C662B;
+    --onPrimary: #FFFFFF;
+    --primaryContainer: #314A12;
+    --onPrimaryContainer: #FFFFFF;
+    --secondary: #1C2511;
+    --onSecondary: #FFFFFF;
+    --secondaryContainer: #3C462F;
+    --onSecondaryContainer: #FFFFFF;
+    --tertiary: #002725;
+    --onTertiary: #FFFFFF;
+    --tertiaryContainer: #1A4A47;
+    --onTertiaryContainer: #FFFFFF;
+    --error: #4E0002;
+    --onError: #FFFFFF;
+    --errorContainer: #8C0009;
+    --onErrorContainer: #FFFFFF;
+    --background: #F9FAEF;
+    --onBackground: #1A1C16;
+    --surface: #F9FAEF;
+    --onSurface: #000000;
+    --surfaceVariant: #E1E4D5;
+    --onSurfaceVariant: #21251C;
+    --outline: #404439;
+    --outlineVariant: #404439;
+    --shadow: #000000;
+    --scrim: #000000;
+    --inverseSurface: #2F312A;
+    --inverseOnSurface: #FFFFFF;
+    --inversePrimary: #D6F7AC;
+    --primaryFixed: #314A12;
+    --onPrimaryFixed: #FFFFFF;
+    --primaryFixedDim: #1C3300;
+    --onPrimaryFixedVariant: #FFFFFF;
+    --secondaryFixed: #3C462F;
+    --onSecondaryFixed: #FFFFFF;
+    --secondaryFixedDim: #26301B;
+    --onSecondaryFixedVariant: #FFFFFF;
+    --tertiaryFixed: #1A4A47;
+    --onTertiaryFixed: #FFFFFF;
+    --tertiaryFixedDim: #003331;
+    --onTertiaryFixedVariant: #FFFFFF;
+    --surfaceDim: #DADBD0;
+    --surfaceBright: #F9FAEF;
+    --surfaceContainerLowest: #FFFFFF;
+    --surfaceContainerLow: #F3F4E9;
+    --surfaceContainer: #EEEFE3;
+    --surfaceContainerHigh: #E8E9DE;
+    --surfaceContainerHighest: #E2E3D8 */
   }
 
   .dark {
@@ -63,6 +113,56 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
+
+    /* --primary: #F4FFDF;
+    --surfaceTint: #B1D18A;
+    --onPrimary: #000000;
+    --primaryContainer: #B5D58E;
+    --onPrimaryContainer: #000000;
+    --secondary: #F4FFDF;
+    --onSecondary: #000000;
+    --secondaryContainer: #C4CFB1;
+    --onSecondaryContainer: #000000;
+    --tertiary: #EAFFFC;
+    --onTertiary: #000000;
+    --tertiaryContainer: #A4D4D0;
+    --onTertiaryContainer: #000000;
+    --error: #FFF9F9;
+    --onError: #000000;
+    --errorContainer: #FFBAB1;
+    --onErrorContainer: #000000;
+    --background: #12140E;
+    --onBackground: #E2E3D8;
+    --surface: #12140E;
+    --onSurface: #FFFFFF;
+    --surfaceVariant: #44483D;
+    --onSurfaceVariant: #F9FCED;
+    --outline: #C9CCBE;
+    --outlineVariant: #C9CCBE;
+    --shadow: #000000;
+    --scrim: #000000;
+    --inverseSurface: #E2E3D8;
+    --inverseOnSurface: #000000;
+    --inversePrimary: #1A3000;
+    --primaryFixed: #D1F2A7;
+    --onPrimaryFixed: #000000;
+    --primaryFixedDim: #B5D58E;
+    --onPrimaryFixedVariant: #0C1A00;
+    --secondaryFixed: #E0EBCC;
+    --onSecondaryFixed: #000000;
+    --secondaryFixedDim: #C4CFB1;
+    --onSecondaryFixedVariant: #101907;
+    --tertiaryFixed: #C0F0EC;
+    --onTertiaryFixed: #000000;
+    --tertiaryFixedDim: #A4D4D0;
+    --onTertiaryFixedVariant: #001A19;
+    --surfaceDim: #12140E;
+    --surfaceBright: #383A32;
+    --surfaceContainerLowest: #0C0F09;
+    --surfaceContainerLow: #1A1C16;
+    --surfaceContainer: #1E201A;
+    --surfaceContainerHigh: #282B24;
+    --surfaceContainerHighest: #33362E */
   }
 }
 

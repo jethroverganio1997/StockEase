@@ -1,14 +1,16 @@
 
 
+
 using System.Text.Json;
 
 namespace SearchService.Data;
 
-public class DbInitializer
+public static class DbInitializer
 {
-    public static async Task InitDb(WebApplication app)
+    public static async Task InitDb(this WebApplication app)
     {
         await DB.InitAsync("SearchDb", MongoClientSettings.FromConnectionString(app.Configuration.GetConnectionString("MongoDbConnection")));
+
 
         await DB.Index<Product>()
             .Key(x => x.ProductName , KeyType.Text)

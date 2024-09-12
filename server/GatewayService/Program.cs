@@ -2,21 +2,21 @@
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 // Add CORS policy
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowLocalhost3000",
-        builder =>
+    options.AddPolicy("customPolicy",
+        b =>
         {
-            builder.WithOrigins("http://localhost:3000")
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
+            b.WithOrigins(builder.Configuration["ClientApp"])
+                .AllowAnyHeader()
+                .AllowAnyMethod();
         });
 });
-
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -28,11 +28,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 var app = builder.Build();
-app.UseCors("AllowLocalhost3000");
+app.UseCors("customPolicy");
+
+app.MapReverseProxy();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapReverseProxy();
+app.UseExceptionHandler(options => { });
+
 
 app.Run();

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { searchProducts } from "../(data)/actions";
+import { searchProducts } from "../actions/product-action";
 
 export const useProductSearchQuery = (url: string) => {
   const initialData = {
@@ -10,7 +10,7 @@ export const useProductSearchQuery = (url: string) => {
     totalCount: 1,
   };
 
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isPending } = useQuery({
     initialData: initialData,
     queryKey: ["inventory", url],
     queryFn: async () => {
@@ -19,5 +19,5 @@ export const useProductSearchQuery = (url: string) => {
     },
   });
 
-  return { data, error, isLoading };
+  return { data, error, isPending };
 };

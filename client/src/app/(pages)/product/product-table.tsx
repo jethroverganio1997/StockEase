@@ -2,25 +2,26 @@ import React from "react";
 import { PagedResult } from "@/types";
 import createColumnsData from "@/components/ui/custom-columns";
 import { DataTable } from "@/components/ui/custom-data-table";
-import TablePagination from "../../components/ui/table-pagination";
-import TableRowSize from "../../components/ui/table-row-size";
-import { Product } from "./(types)/product";
-import InventoryColumns from "./(types)/inventory-columns";
-import { usePagination } from "./(hooks)/usePagination";
-import { useTableState } from "./(hooks)/useTableState";
-import TableSkeleton from "../../components/ui/table-skeleton";
+import TablePagination from "@/components/ui/table-pagination";
+import TableRowSize from "@/components/ui/table-row-size";
+import { usePagination } from "@/features/inventory/hooks/usePagination";
+import { useTableState } from "@/features/inventory/hooks/useTableState";
+import TableSkeleton from "@/components/ui/table-skeleton";
+import AlertScreen from "@/components/ui/alert-screen";
+import { Product } from "@/features/inventory/types/product";
+import InventoryColumns from "@/features/inventory/types/inventory-columns";
 
-interface InventoryTableProps {
+interface Props {
   products: PagedResult<Product[]>;
   loading: boolean;
   error: Error | null;
 }
 
-export default function InventoryTable({
+export default function ProductTable({
   products,
   loading,
   error,
-}: InventoryTableProps) {
+}: Props) {
   const columns = createColumnsData<Product>(InventoryColumns);
 
   const { handlePageChange, handlePageRowChange } = usePagination();
@@ -36,7 +37,7 @@ export default function InventoryTable({
       {loading ? (
         <TableSkeleton />
       ) : error ? (
-        <div>Error: {error.message}</div>
+        <AlertScreen error={error} />
       ) : (
         <DataTable table={table} columns={columns} />
       )}

@@ -8,6 +8,8 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 import { useAppDispatch, useAppSelector } from "../../state/redux";
 import { setIsSidebarCollapsed } from "../../state";
 import { SheetMenu } from "./sheet-menu";
+import { usePathname } from "next/navigation";
+import path from "path";
 
 // Define the types for the props
 interface IconButtonProps {
@@ -17,23 +19,22 @@ interface IconButtonProps {
 
 const NavBar = () => {
   const { theme, setTheme } = useTheme();
-  const dispatch = useAppDispatch();
-  const isSidebarCollapsed = useAppSelector(
-    (state) => state.global.isSidebarCollapsed,
-  );
-  const toggleSidebar = () => {
-    dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
-  };
 
   const toggleDarkMode = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
+
+  const pathname = usePathname();
+  const name = pathname.split("/")[1].charAt(0).toUpperCase() + pathname.split("/")[1].slice(1);
 
   return (
     <div className="mb-6 flex w-full items-center justify-between">
       {/* LEFT SIDE */}
       <div className="flex items-center justify-between gap-5">
         <SheetMenu />
+        <h2 className="text-2xl font-semibold tracking-tight">
+          {name}
+        </h2>
       </div>
 
       {/* RIGHT SIDE */}

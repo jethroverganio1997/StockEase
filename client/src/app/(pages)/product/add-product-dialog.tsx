@@ -291,10 +291,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import ComboboxSearch from "../../components/ui/combobox-search";
+import ComboboxSearch from "../../../components/ui/combobox-search";
 import { Plus } from "lucide-react";
 import { useRef } from "react";
-import { useScrollJump } from "./(hooks)/useScrollJump";
+import { useScrollJump } from "../../../features/inventory/hooks/useScrollJump";
 
 export function AddProductDialog() {
   const scrollIds = ["Product", "Pricing", "Inventory"];

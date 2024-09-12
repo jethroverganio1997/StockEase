@@ -33,7 +33,7 @@ public class SearchProductEndpoint : IEndpoint
 
 
     private async Task<Ok<SuccessResponse<Response>>> Handler([AsParameters] Request request)
-    {
+    {   
         var query = DB.PagedSearch<Product,Product>();
 
         if (!string.IsNullOrEmpty(request.SearchItem))

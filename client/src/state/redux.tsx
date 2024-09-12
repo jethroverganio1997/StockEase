@@ -21,7 +21,7 @@ import {
 } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import searchSlice from "../app/inventory/(state)/search-slice";
+import searchSlice from "../features/inventory/stores/search-slice";
 
 /* REDUX PERSISTENCE */
 const createNoopStorage = () => {
