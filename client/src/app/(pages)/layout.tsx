@@ -1,10 +1,11 @@
-'use client'
+"use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
-import StoreProvider from "../../state/redux";
-import DashboardPanelLayout from "../../components/dashboard-panel/dashboard-panel-layout";
-import { ThemeProvider } from "../../components/ui/theme-provider";
+import StoreProvider from "@/state/redux";
+import DashboardPanelLayout from "@/components/dashboard-panel/dashboard-panel-layout";
+import { ThemeProvider } from "@/components/ui/theme-provider";
+import UserProvider from "../../features/auth/components/user-provider";
 
 export default function PageLayout({
   children,
@@ -21,9 +22,11 @@ export default function PageLayout({
       disableTransitionOnChange
     >
       <StoreProvider>
-        <QueryClientProvider client={queryClient}>
-          <DashboardPanelLayout>{children}</DashboardPanelLayout>
-        </QueryClientProvider>
+        <UserProvider>
+          <QueryClientProvider client={queryClient}>
+            <DashboardPanelLayout>{children}</DashboardPanelLayout>
+          </QueryClientProvider>
+        </UserProvider>
       </StoreProvider>
     </ThemeProvider>
   );

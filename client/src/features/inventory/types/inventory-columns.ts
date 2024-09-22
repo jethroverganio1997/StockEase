@@ -1,4 +1,4 @@
-import { ColumnsData } from "../../../../types";
+import { ColumnsData } from "../../../types";
 
 const InventoryColumns: ColumnsData[] = [
   {

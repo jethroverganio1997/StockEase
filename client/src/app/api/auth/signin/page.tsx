@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { LogIn } from "lucide-react";
-import { login } from "../../../../features/auth/auth-action";
+import { login } from "../../../../features/auth/actions/auth-action";
 
 export default function SignIn({
   searchParams,
@@ -32,7 +32,7 @@ export default function SignIn({
             onClick={() => login(searchParams.callbackUrl)}
             className="w-full"
           >
-            <LogIn className="mr-2 h-4 w-4 " />
+            <LogIn className="mr-2 h-4 w-4" />
             Login
           </Button>
         </CardContent>

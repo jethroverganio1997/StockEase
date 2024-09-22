@@ -47,9 +47,9 @@ import {
         groupLabel: "Inventory",
         menus: [
           {
-            href: "/inventory",
+            href: "/product",
             label: "Products",
-            active: pathname.includes("/inventory"),
+            active: pathname.includes("/product"),
             icon: Package,
             submenus: []
           },
@@ -84,9 +84,9 @@ import {
             submenus: []
           },
           {
-            href: "/tags",
-            label: "Tags",
-            active: pathname.includes("/tags"),
+            href: "/sales",
+            label: "Sales",
+            active: pathname.includes("/sales"),
             icon: Tag,
             submenus: []
           }

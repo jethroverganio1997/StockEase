@@ -1,8 +1,8 @@
 "use server";
 import { auth, signIn, signOut } from "@/features/auth/auth";
-import { redirect } from "next/dist/server/api-utils";
+import { User } from "next-auth";
 
-export async function getCurrentUser() {
+export async function getCurrentUser(): Promise<User | null> {
   try {
     const session = await auth();
 
@@ -15,7 +15,7 @@ export async function getCurrentUser() {
 }
 
 export async function login(callbackUrl?: string) {
-  await signIn("id-server", {redirectTo: callbackUrl}); // { prompt: "login" }
+  await signIn("id-server", { redirectTo: callbackUrl }, { prompt: "login" }); // { prompt: "login" }
 }
 
 export async function logout() {

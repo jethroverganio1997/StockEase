@@ -26,6 +26,7 @@ const NavBar = () => {
 
   const pathname = usePathname();
   const name = pathname.split("/")[1].charAt(0).toUpperCase() + pathname.split("/")[1].slice(1);
+  const username = useAppSelector((state) => state.user.user?.name?.charAt(0).toUpperCase());
 
   return (
     <div className="mb-6 flex w-full items-center justify-between">
@@ -65,7 +66,7 @@ const NavBar = () => {
 
         <Avatar className="cursor-pointer">
           <AvatarFallback className="hover:bg-primary-foreground">
-            JE
+            {username}
           </AvatarFallback>
         </Avatar>
       </div>

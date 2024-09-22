@@ -22,6 +22,7 @@ import {
 import { PersistGate } from "redux-persist/integration/react";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import searchSlice from "../features/inventory/stores/search-slice";
+import userSlice from "../features/auth/stores/user-slice";
 
 /* REDUX PERSISTENCE */
 const createNoopStorage = () => {
@@ -46,11 +47,12 @@ const storage =
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["global", "search"],
+  whitelist: ["global", "search", "user"],
 };
 const rootReducer = combineReducers({
   global: globalReducer,
   search: searchSlice,
+  user: userSlice,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
