@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import { useAppDispatch, useAppSelector } from "../../state/redux";
+import { useAppDispatch, useAppSelector } from "../../app/redux";
 import { setIsSidebarCollapsed } from "../../state";
 import { SheetMenu } from "./sheet-menu";
 import { usePathname } from "next/navigation";
@@ -25,17 +25,19 @@ const NavBar = () => {
   };
 
   const pathname = usePathname();
-  const name = pathname.split("/")[1].charAt(0).toUpperCase() + pathname.split("/")[1].slice(1);
-  const username = useAppSelector((state) => state.user.user?.name?.charAt(0).toUpperCase());
+  const name =
+    pathname.split("/")[1].charAt(0).toUpperCase() +
+    pathname.split("/")[1].slice(1);
+  const username = useAppSelector((state) =>
+    state.user.user?.name?.charAt(0).toUpperCase(),
+  );
 
   return (
     <div className="mb-6 flex w-full items-center justify-between">
       {/* LEFT SIDE */}
       <div className="flex items-center justify-between gap-5">
         <SheetMenu />
-        <h2 className="text-2xl font-semibold tracking-tight">
-          {name}
-        </h2>
+        <h2 className="text-2xl font-semibold tracking-tight">{name}</h2>
       </div>
 
       {/* RIGHT SIDE */}

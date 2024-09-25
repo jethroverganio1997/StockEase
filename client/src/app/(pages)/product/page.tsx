@@ -1,23 +1,24 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProductTable from "./product-table";
 import SearchFilterInput from "../../../components/ui/search-input";
 import { useSearchProducts } from "../../../features/inventory/hooks/useSearchProducts";
 import { useProductSearchQuery } from "../../../features/inventory/hooks/useProductSearchQuery";
-import { AddProductDialog } from "./add-product-dialog";
+import { ProductSheet } from "./product_sheet";
+import { useAppSelector } from "../../redux";
 
 export default function Inventory() {
-  const { url, onSearch } = useSearchProducts();
-  const { data, error, isPending } = useProductSearchQuery(url);
+  const { onSearch } = useSearchProducts();
 
   return (
     <>
       <div className="flex items-center justify-between gap-4">
         <SearchFilterInput onSearch={onSearch} />
-        <AddProductDialog />
+        <ProductSheet />
       </div>
-      <ProductTable products={data} error={error} loading={isPending} />
+
+      <ProductTable />
     </>
   );
 }

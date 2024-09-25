@@ -73,14 +73,6 @@ const InventoryColumns: ColumnsData[] = [
     enableSorting: true,
     enableHiding: true,
   },
-  {
-    id: "actions",
-    headerName: "Actions",
-    headerType: "Text",
-    CellType: "Action",
-    enableSorting: false,
-    enableHiding: false,
-  },
 ];
 
 export default InventoryColumns;

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { getCurrentUser } from "../features/auth/actions/auth-action";
-import StoreProvider from "../state/redux";
+import StoreProvider from "./redux";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -15,12 +15,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        {children}
-        </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

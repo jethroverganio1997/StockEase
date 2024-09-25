@@ -6,7 +6,6 @@ import {
   useSelector,
   Provider,
 } from "react-redux";
-import globalReducer from ".";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 import {
@@ -22,6 +21,7 @@ import {
 import { PersistGate } from "redux-persist/integration/react";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import searchSlice from "../features/inventory/stores/search-slice";
+import globalReducer from "@/state";
 import userSlice from "../features/auth/stores/user-slice";
 
 /* REDUX PERSISTENCE */

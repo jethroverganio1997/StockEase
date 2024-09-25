@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Link from "next/link";
 import { PanelsTopLeft } from "lucide-react";
@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Menu } from "@/components/dashboard-panel/menu";
 import { SidebarToggle } from "@/components/dashboard-panel/sidebar-toggle";
-import { useAppDispatch, useAppSelector } from "../../state/redux";
+import { useAppDispatch, useAppSelector } from "../../app/redux";
 import { setIsSidebarCollapsed } from "../../state";
 
 export function Sidebar() {

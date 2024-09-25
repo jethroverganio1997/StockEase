@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Sidebar } from "@/components/dashboard-panel/sidebar";
 import Navbar from "@/components/dashboard-panel/nav-bar";
 import state, { setIsSidebarCollapsed } from "../../state";
-import { useAppDispatch, useAppSelector } from "../../state/redux";
+import { useAppDispatch, useAppSelector } from "../../app/redux";
 
 export default function DashboardPanelLayout({
   children,

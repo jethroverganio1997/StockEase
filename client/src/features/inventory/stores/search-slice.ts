@@ -21,7 +21,7 @@ const initialState: SearchState = {
 };
 
 const searchSlice = createSlice({
-  name: "search",
+  name: "global",
   initialState,
   reducers: {
     resetSearchParams: (state) => state = initialState,

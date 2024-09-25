@@ -1,8 +1,7 @@
 "use client";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
-import StoreProvider from "@/state/redux";
+import StoreProvider from "@/app/redux";
 import DashboardPanelLayout from "@/components/dashboard-panel/dashboard-panel-layout";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import UserProvider from "../../features/auth/components/user-provider";
@@ -12,7 +11,6 @@ export default function PageLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const queryClient = new QueryClient();
 
   return (
     <ThemeProvider
@@ -23,9 +21,7 @@ export default function PageLayout({
     >
       <StoreProvider>
         <UserProvider>
-          <QueryClientProvider client={queryClient}>
             <DashboardPanelLayout>{children}</DashboardPanelLayout>
-          </QueryClientProvider>
         </UserProvider>
       </StoreProvider>
     </ThemeProvider>

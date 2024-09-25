@@ -14,6 +14,7 @@ import {
 type Props<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   table: import("@tanstack/table-core").Table<TData>;
+  onRowClick?: (row: TData) => void;
 };
 
 export function DataTable<TData, TValue>({

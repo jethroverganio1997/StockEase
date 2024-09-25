@@ -23,12 +23,14 @@ import { useState } from "react";
 interface ComboboxSearchProps {
   data: string[];
   label: string;
+  initialValue?: string;
   className?: string;
 }
 
 export default function ComboboxSearch({
   data,
   label,
+  initialValue,
   className,
 }: ComboboxSearchProps) {
   const [open, setOpen] = useState(false);
@@ -41,15 +43,17 @@ export default function ComboboxSearch({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={cn("w-full justify-between",className)}
+          className={cn("w-full justify-between", className)}
         >
-          {value
-            ? data.find((data) => data === value)
-            : `Select ${label}...`}
+          {initialValue
+            ? data.find((data) => data === initialValue)
+            : value
+              ? data.find((data) => data === value)
+              : `Select ${label}`}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-screen max-w-[330px] p-0">
+      <PopoverContent className="p-0">
         <Command>
           <CommandInput placeholder="Select status..." />
           <CommandList>
